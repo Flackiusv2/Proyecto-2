@@ -6,7 +6,7 @@ import logica.Galeria;
 
 public class shitHolder {
 	/**
-     
+     test para prpoar los commits
 	Scanner scanner = new Scanner(System.in);
     int opcionMenuPrincipal;
 
