@@ -20,11 +20,13 @@ import pieza.Pieza;
 import pieza.Pintura;
 import pieza.Video;
 import usuario.Administrador;
+import usuario.Cajero;
 import usuario.Cliente;
 import usuario.Comprador;
 import usuario.ControladorUsuarios;
 import usuario.Propietario;
 import usuario.Empleado;
+import usuario.Operador;
 
 public class Galeria {
     private Inventario inventario;
@@ -97,27 +99,115 @@ public class Galeria {
     {
         PrintWriter writer = new PrintWriter( archivo );
         
-        
+        //Guardamos todas las piezas
         for (Pieza pz : inventario.getPiezasDisponibleVenta()) {
         	
-        	writer.println(pz.getTipoPieza() + ":" +  pz.getTitulo() + ":" +  pz.getAnioCreacion() +
-        			":" + pz.getLugarCreacion() + ":" + pz.getFechaDevolucion() + ":"+  pz.isDisponibleVentaValorFijo() 
-        			+ ":"+  pz.isBloqueada()+":"+ pz.getAutor().getNombre()+":"+ pz.getAutor().isEsAnonimo());  
+        	String titulo =  pz.getTitulo();
+        	String anio = pz.getAnioCreacion();
+        	String lugar = pz.getLugarCreacion();
+        	String fecha = pz.getFechaDevolucion();
+        	boolean disponible = pz.isDisponibleVentaValorFijo();
+        	boolean bloqueada = pz.isBloqueada();
+        	String autor = pz.getAutor().getNombre();
+        	boolean anonimo = pz.getAutor().isEsAnonimo();
+        	int precio = pz.getPrecioFijo();
+        	 
+        	
+        	if( pz.getTipoPieza().equals( "Escultura" ) )
+            {	
+                Escultura es = (Escultura) pz;
+                int alto = es.getAlto();
+                int ancho = es.getAncho();
+                int profundidad = es.getProfundidad();
+                String materiales = es.getMaterialesConstruccion();
+                boolean electricidad = es.isNecesitaElectricidad();
+                
+                writer.println(pz.getTipoPieza() + ":" +  titulo + ":" +  anio + ":" + lugar + ":" + fecha + ":"+  disponible  
+            			+ ":"+  bloqueada +":"+  alto + ":" + ancho + ":" + profundidad + ":" + materiales + ":" + electricidad
+            			+ ":" + autor +":"+  anonimo + ":" + precio );  
+                
+            }
+            else if( pz.getTipoPieza().equals( "Fotografia" ) )
+            {
+            	Fotografia ft = (Fotografia) pz;
+            	String resolucion = ft.getResolucion();
+            	String tamanio = ft.getTamanio();            	
+            	writer.println(pz.getTipoPieza() + ":" +  titulo + ":" +  anio + ":" + lugar + ":" + fecha + ":"+  disponible  
+            			+ ":"+  bloqueada +":"+ resolucion +":"+  tamanio +":"+  autor +":"+  anonimo+ ":" + precio ); 
+                
+                
+            }
+            else if( pz.getTipoPieza().equals( "Impresion" ) )
+            {
+            	Impresion imp = (Impresion) pz;
+            	String tamaño = imp.getTamaño();
+                String resolucion = imp.getResolucion();
+            	String tipoDePapel = imp.getTipoDePapel();
+            	String acabado = imp.getAcabado();
+            	
+            	writer.println(pz.getTipoPieza() + ":" +  titulo + ":" +  anio + ":" + lugar + ":" + fecha + ":"+  disponible  
+            			+ ":"+  bloqueada +":"+ tamaño +":"+ resolucion +":"+ tipoDePapel +":"+ acabado +":"+ autor +":"+  anonimo+ ":" + precio ); 
+                
+            }
+            else if( pz.getTipoPieza().equals( "Pintura" ) )
+            {
+            	Pintura pt =  (Pintura) pz;
+            	int alto = pt.getAlto();
+            	int ancho = pt.getAncho();
+            	String tecnica = pt.getTecnica();
+            	
+            	writer.println(pz.getTipoPieza() + ":" +  titulo + ":" +  anio + ":" + lugar + ":" + fecha + ":"+  disponible  
+            			+ ":"+  bloqueada +":"+ alto +":"+ ancho +":"+ tecnica +":"+ autor +":"+  anonimo+ ":" + precio ); 
+                
+            }
+            else if( pz.getTipoPieza().equals( "Video" ) )
+            {
+            	Video vd = (Video) pz;
+            	String duracion =  vd.getDuracion();
+            	String tamanio = vd.getTamanio();
+            	
+            	writer.println(pz.getTipoPieza() + ":" +  titulo + ":" +  anio + ":" + lugar + ":" + fecha + ":"+  disponible  
+            			+ ":"+  bloqueada +":"+ duracion +":"+ tamanio +":"+ autor +":"+  anonimo+ ":" + precio ); 
+                
+            }
+        	
+        	
+        	
         	
         }
         
-        
+        //Guardamos todos los compradores porque actuan como propietarios tambien
         for( Comprador cli : controladorUsuarios.getMapaCompradores().values( ) )
         {
             writer.println("comprador:" + cli.getLogin() +":"+ cli.getPassword()+":"+ cli.getNombre()+":"+ cli.getTelefono()
             +":"+ cli.getLimiteCompras() +":"+ cli.getId());
+            
+            
         }
-        writer.close( );
-    } 
- 
         
-     
-
+        writer.close( );
+    }
+        
+    public void guardarEmpleados( File archivo ) throws IOException
+    {
+        PrintWriter writer = new PrintWriter( archivo );
+      //Guardamos a todos los empleados
+        for (Empleado empl : controladorUsuarios.getMapaEmpleados().values()) {
+        	if (empl.getRol().equals("Cajero")) {
+        		
+        		writer.println("cajero:" + ":"+empl.getLogin() +":"+ empl.getPassword() +":"+ empl.getRol() +
+        				":" + empl.getId() );
+        	}else {
+        		
+        		writer.println("operador:" + ":"+empl.getLogin() +":"+ empl.getPassword() +":"+ empl.getRol() +
+        				":" + empl.getId() );
+        	}
+        }
+        //Guardamos al admin de la galeria
+        writer.println("admin:" + ":"+ administradorGaleria.getLogin() +":"+ administradorGaleria.getPassword() +":"+ administradorGaleria.getRol() + ":" + administradorGaleria.getId());
+        
+        writer.close( );
+    }
 
     public static Galeria cargarEstado( File archivo ) throws FileNotFoundException, IOException, NumberFormatException
     {	
@@ -141,9 +231,16 @@ public class Galeria {
                 String fecha = partes [4];
                 String Sdisponible = partes[5];
                 String Sbloqueada = partes[6];
-                String nombreAutor = partes[7];
-                String Sanonimo = partes[8];
-                
+                int alto = Integer.parseInt(partes[7]);
+                int  ancho = Integer.parseInt(partes[8]);
+                int  profundidad = Integer.parseInt(partes[9]);
+                int  peso = Integer.parseInt(partes[10]);
+                String material = partes[11];
+                String Selectricidad = partes[12];
+                boolean electricidad = Boolean.parseBoolean(Selectricidad);
+                String nombreAutor = partes[13];
+                String Sanonimo = partes[14];
+                int precio = Integer.parseInt(partes[15]);
                 
                 if (Sdisponible == "true") {
                 	disponible = true;
@@ -165,8 +262,9 @@ public class Galeria {
                 
                 
                 Escultura nuevaEscultura = new Escultura(titulo,anio,lugar,fecha,disponible,bloqueada,
-                		10,10,10,100,"Cemento",false);
+                		alto,ancho,profundidad,peso,material,electricidad);
                 
+                nuevaEscultura.setPrecioFijo(precio);
                 nuevaEscultura.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevaEscultura);
                 cInventario.pasarAExhibicion(nuevaEscultura);
@@ -183,9 +281,11 @@ public class Galeria {
                 String fecha = partes [4];
                 String Sdisponible = partes[5];
                 String Sbloqueada = partes[6];
-                String nombreAutor = partes[7];
-                String Sanonimo = partes[8];
-                
+                String resolucion = partes[7];
+                String tamanio = partes[8];
+                String nombreAutor = partes[9];
+                String Sanonimo = partes[10];
+                int precio = Integer.parseInt(partes[11]);
                 
                 if (Sdisponible == "true") {
                 	disponible = true;
@@ -207,8 +307,9 @@ public class Galeria {
                 
                 
                 Fotografia nuevaFoto  = new Fotografia(titulo,anio,lugar,fecha,disponible,bloqueada,
-                		"1920x1080","100");
+                		resolucion,tamanio);
                 
+                nuevaFoto.setPrecioFijo(precio);
                 nuevaFoto.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevaFoto);
                 cInventario.pasarAExhibicion(nuevaFoto);
@@ -226,9 +327,13 @@ public class Galeria {
                 String fecha = partes [4];
                 String Sdisponible = partes[5];
                 String Sbloqueada = partes[6];
-                String nombreAutor = partes[7];
-                String Sanonimo = partes[8];
-                
+                String tamanio = partes[7];
+                String resolucion = partes[8];
+                String tipoPapel = partes[9];
+                String acabado = partes[10];
+                String nombreAutor = partes[11];
+                String Sanonimo = partes[12];
+                int precio = Integer.parseInt(partes[13]);
                 
                 if (Sdisponible == "true") {
                 	disponible = true;
@@ -250,8 +355,9 @@ public class Galeria {
                 
                 
                 Impresion nuevaImpresion  = new Impresion(titulo,anio,lugar,fecha,disponible,bloqueada,
-                		"1920x1080","100","glossy","troquelo");
+                		tamanio,resolucion,tipoPapel,acabado);
                 
+                nuevaImpresion.setPrecioFijo(precio);
                 nuevaImpresion.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevaImpresion);
                 cInventario.pasarAExhibicion(nuevaImpresion);
@@ -268,9 +374,12 @@ public class Galeria {
                 String fecha = partes [4];
                 String Sdisponible = partes[5];
                 String Sbloqueada = partes[6];
-                String nombreAutor = partes[7];
-                String Sanonimo = partes[8];
-                
+                int alto = Integer.parseInt(partes[7]);
+                int ancho = Integer.parseInt(partes[8]);
+                String tecnica = partes[9];
+                String nombreAutor = partes[10];
+                String Sanonimo = partes[11];
+                int precio = Integer.parseInt(partes[12]);
                 
                 if (Sdisponible == "true") {
                 	disponible = true;
@@ -292,8 +401,9 @@ public class Galeria {
                 
                 
                 Pintura nuevaPintura   = new Pintura(titulo,anio,lugar,fecha,disponible,bloqueada,
-                		10,10,"oleo");
+                		alto,ancho,tecnica);
                 
+                nuevaPintura.setPrecioFijo(precio);
                 nuevaPintura.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevaPintura);
                 cInventario.pasarAExhibicion(nuevaPintura);
@@ -311,8 +421,10 @@ public class Galeria {
                 String Sdisponible = partes[5];
                 String Sbloqueada = partes[6];
                 String nombreAutor = partes[7];
-                String Sanonimo = partes[8];
-                
+                String duracion = partes[8];
+                String tamanio = partes[9];
+                String Sanonimo = partes[10];
+                int precio = Integer.parseInt(partes[11]);
                 
                 if (Sdisponible == "true") {
                 	disponible = true;
@@ -334,8 +446,9 @@ public class Galeria {
                 
                 
                 Video nuevoVideo = new Video(titulo,anio,lugar,fecha,disponible,bloqueada,
-                		"60","100");
+                		duracion,tamanio);
                 
+                nuevoVideo.setPrecioFijo(precio);
                 nuevoVideo.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevoVideo);
                 cInventario.pasarAExhibicion(nuevoVideo);
@@ -355,6 +468,10 @@ public class Galeria {
         		control.agregarComprador(nuevoComprador);
         		control.agregarUsuario(nombre, password);
             }
+            
+            
+            
+            
             line = br.readLine( );
         }
         br.close( );
@@ -362,6 +479,57 @@ public class Galeria {
         Galeria nuevaGaleria = new Galeria( cInventario, control );
         return nuevaGaleria;
     
+    }
+    
+    public static Galeria cargarEmpleados( File archivo, Galeria laGaleria ) throws FileNotFoundException, IOException, NumberFormatException
+    {	
+    	
+        BufferedReader br = new BufferedReader( new FileReader( archivo ) );
+        String line = br.readLine( );
+        while( line != null )
+        {
+            String[] partes = line.split( ":" );
+            if( partes[ 0 ].equals("cajero" ) )
+            {
+            	String nombre = partes[ 1 ];
+                String password = partes[2];
+                String rol = partes [3];
+                String id =  partes[4];
+                
+                Cajero nuevoCajero  =  new Cajero(nombre,password,rol,laGaleria,id);
+                laGaleria.getControladorUsuarios().agregarEmpleado(nuevoCajero);
+				laGaleria.getControladorUsuarios().agregarEmpleadoByName(nombre, nuevoCajero);
+				laGaleria.getControladorUsuarios().agregarUsuario(nombre, password);
+            }
+            else if( partes[ 0 ].equals("operador" ) )
+            {
+            	String nombre = partes[ 1 ];
+                String password = partes[2];
+                String rol = partes [3];
+                String id =  partes[4];
+                
+                Operador nuevoOperador  =  new Operador(nombre,password,rol,laGaleria,id);
+                laGaleria.getControladorUsuarios().agregarEmpleado(nuevoOperador);
+				laGaleria.getControladorUsuarios().agregarEmpleadoByName(nombre, nuevoOperador);
+				laGaleria.getControladorUsuarios().agregarUsuario(nombre, password);
+            }
+            else if( partes[ 0 ].equals("admin" ) )
+            {
+            	String nombre = partes[ 1 ];
+                String password = partes[2];
+                String rol = partes [3];
+                String id =  partes[4];
+                
+                Administrador nuevoAdmin =  new Administrador(nombre,password,rol,laGaleria,id);
+                laGaleria.setAdministradorGaleria(nuevoAdmin);
+                laGaleria.getControladorUsuarios().agregarUsuario(nombre, password);
+        		
+            }
+            line = br.readLine( );
+        }
+        br.close( );
+
+        return laGaleria;
     }
 }
     

@@ -44,7 +44,23 @@ public class Inventario {
     public void pasarAPasadas(Pieza pieza){
         this.piezasPasadas.add(pieza);
     }
-
+    
+    public void realizarCompra(Pieza pieza) {
+    	int i = 0;
+    	for (Pieza pz: piezasDisponibleVenta) {
+    		if (pz.equals(pieza)) {
+    			break;
+    		}else {
+    			i +=1;
+    		}
+    	
+    	}
+    	piezasDisponibleVenta.remove(i);
+    	
+    }
+    
+    
+    
     public void pasarAExhibicion(Pieza pieza){
         this.piezasEnExhibicion.add(pieza);
     }

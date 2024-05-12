@@ -65,7 +65,7 @@ public class ConsolaInicioSesion extends ConsolaBasica{
         			Empleado empl_verficacion = laGaleria.getControladorUsuarios().getEmpleadoByName(nombre);
         			String rol_check = empl_verficacion.getRol();
         			String password_empl_check = empl_verficacion.getPassword();
-        			if (rol_check == rol) {
+        			if (rol_check.equals(rol)) {
 	        			if (password_empl_check.equals(password)) {
 		        			System.out.println("Incio de sesion exitoso!");
 		        			Empleado nuevoEmpleado = laGaleria.getControladorUsuarios().getEmpleadoByName(nombre);
@@ -87,10 +87,7 @@ public class ConsolaInicioSesion extends ConsolaBasica{
             	String nombre = pedirCadenaAlUsuario( "Ingrese su nombre de usuario" );
         		String password = pedirCadenaAlUsuario( "Ingrese su contraseña" );
         		String password_verificacion = MapaUsuarios.get(nombre);
-        		System.out.println(password);
-        		System.out.println(password_verificacion);
-        		System.out.println(MapaUsuarios);
-        		
+	
         		if (password.equals(password_verificacion)) { 		
         			Comprador mySelf = laGaleria.getControladorUsuarios().getMapaCompradores().get(nombre);
         			ConsolaComprador consolaComprador = new ConsolaComprador( laGaleria, mySelf);

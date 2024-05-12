@@ -35,9 +35,10 @@ public class ConsolaComprador extends ConsolaBasica {
             int opcionSeleccionada = mostrarMenu( "Menu de la Galeria", opcionesComprador );
             if( opcionSeleccionada == 1 )
             {	
+            	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
-            		System.out.println("La pieza " + pz.getTitulo() + "con un valor de " + pz.getPrecioFijo());  
+            		
+            		System.out.println("La pieza " + pz.getTitulo() + " con un valor de " + pz.getPrecioFijo());  
             		
             	}
             	String piezaName  = pedirCadenaAlUsuario("Ingrese el nombre de la pieza que desea comprar");
@@ -56,10 +57,11 @@ public class ConsolaComprador extends ConsolaBasica {
             }
             
             else if( opcionSeleccionada == 3 )
-            {
+            {	
+            	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
-            		System.out.println("La pieza " + pz.getTitulo() + "con un valor de " + pz.getPrecioFijo());  
+            		
+            		System.out.println("La pieza " + pz.getTitulo() + " con un valor de " + pz.getPrecioFijo());  
             		
             	}
             	String piezaName  = pedirCadenaAlUsuario("Ingrese el nombre de la pieza de interes");
@@ -67,9 +69,10 @@ public class ConsolaComprador extends ConsolaBasica {
             	pz.mostrarHistorial();
             }
             else if( opcionSeleccionada == 4 )
-            {
+            {	
+            	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
+            		
             		System.out.println("La pieza " + pz.getTitulo() + " y su autor es " + pz.getAutor().getNombre());  
             		
             	}
@@ -90,9 +93,12 @@ public class ConsolaComprador extends ConsolaBasica {
     	
     } 
 	
-	public static void realizarCompraF(Pieza pz, Comprador yo) {
+	public  void realizarCompraF(Pieza pz, Comprador yo) {
+		
 	    System.out.println("El resultado de la compra de la pieza "+ pz.getTitulo()+ " fue: "); 
-	    System.out.println(yo.realizarCompraFija(pz)); 
+	    Compra nuevaCompra = yo.realizarCompraFija(pz); 
+	    laGaleria.agregarCompra(nuevaCompra);
+	    laGaleria.getInventario().realizarCompra(pz);
 	    
 	    }
 	

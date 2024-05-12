@@ -32,17 +32,17 @@ public class Comprador extends Cliente {
     public void agregarCompra(Compra compra) {
          misCompras.add(compra);
     }
-    public String realizarCompraFija(Pieza pieza){
+    public Compra realizarCompraFija(Pieza pieza){
         // Realiza una compra fija
         if (pieza.isDisponibleVentaValorFijo() && !pieza.isBloqueada() && this.limiteCompras >= pieza.getPrecioFijo()){
-            Compra compra = new Compra(Usuario.obtenerNuevoID(), pieza.getPrecioFijo(), "Efectivo", pieza);
-            this.misCompras.add(compra);
-            return "Compra realizada";
-        }
-        else{
-            return "Compra no realizada pues la pieza no estaba disponible para ser vendida por compra fija o el precio de la pieza supera tu límite de compras";
+            Compra nuevaCompra = new Compra(Usuario.obtenerNuevoID(), pieza.getPrecioFijo(), "Efectivo", pieza);
+            this.misCompras.add(nuevaCompra);
+            return  nuevaCompra;
+        }else {
+        	return null;
         }
     }
+       
     public void verHistorialCompras(){
         for (Compra compra : misCompras) {
             System.out.println(compra);

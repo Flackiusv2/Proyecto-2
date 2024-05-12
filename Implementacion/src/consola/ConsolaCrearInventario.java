@@ -67,6 +67,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 		String anio = pedirCadenaAlUsuario( "Ingrese el año de creacion de la pieza" );
 		String lugar = pedirCadenaAlUsuario( "Ingrese el lugar donde se creo" );
 		String fecha = pedirCadenaAlUsuario( "Ingrese la fecha de  devolucion" );
+		int precio = pedirEnteroAlUsuario("Ingrese el valor de la pieza");
 		boolean disponibleVentaValorFijo = true;
 		boolean bloqueada = false;
 		
@@ -85,7 +86,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 			
 	        Escultura nuevaEscultura = new Escultura(titulo,anio,lugar,fecha, disponibleVentaValorFijo, bloqueada,
 	        		alto,ancho,profundidad,peso,material,electricidad);
-	        
+	        nuevaEscultura.setPrecioFijo(precio);
 			nuevaEscultura.setAutor(nuevoAutor);
 	        boolean exhibicion = pedirConfirmacionAlUsuario("La pieza estara en exhibicion?");
 	        if (exhibicion) {
@@ -94,6 +95,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevaEscultura);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevaEscultura);
+	        nuevoAutor.agregarPieza(nuevaEscultura);
 	        
         }
         else if  ( opcionSeleccionada == 2 ) {
@@ -103,6 +105,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        Fotografia nuevaFoto = new Fotografia(titulo,anio,lugar,fecha, disponibleVentaValorFijo, bloqueada,
 	        		resolucion, tamaño);
 	        
+	        nuevaFoto.setPrecioFijo(precio);
 	        nuevaFoto.setAutor(nuevoAutor);
 	        boolean exhibicion = pedirConfirmacionAlUsuario("La pieza estara en exhibicion?");
 	        if (exhibicion) {
@@ -111,6 +114,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevaFoto);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevaFoto);
+	        nuevoAutor.agregarPieza(nuevaFoto);
         }
         else if  ( opcionSeleccionada == 3 ) {
         	
@@ -122,6 +126,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        Impresion nuevaImpresion = new Impresion(titulo,anio,lugar,fecha, disponibleVentaValorFijo, bloqueada,
 	        		resolucion,tamaño,tipoDePapel,acabado);
 	        
+	        nuevaImpresion.setPrecioFijo(precio);
 	        nuevaImpresion.setAutor(nuevoAutor);
 	        boolean exhibicion = pedirConfirmacionAlUsuario("La pieza estara en exhibicion?");
 	        if (exhibicion) {
@@ -130,6 +135,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevaImpresion);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevaImpresion);
+	        nuevoAutor.agregarPieza(nuevaImpresion);
 	        
         }
         else if  ( opcionSeleccionada == 4 ) {
@@ -140,6 +146,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 			Pintura nuevaPintura = new Pintura(titulo,anio,lugar,fecha, disponibleVentaValorFijo, bloqueada,
 					ancho,alto,tecnica);
 			
+			nuevaPintura.setPrecioFijo(precio);
 			nuevaPintura.setAutor(nuevoAutor);
 			boolean exhibicion = pedirConfirmacionAlUsuario("La pieza estara en exhibicion?");
 	        if (exhibicion) {
@@ -148,6 +155,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevaPintura);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevaPintura);
+	        nuevoAutor.agregarPieza(nuevaPintura);
 			
         }	
         else if  ( opcionSeleccionada == 5 ) {
@@ -157,6 +165,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        Video nuevoVideo = new Video(titulo,anio,lugar,fecha, disponibleVentaValorFijo, bloqueada,
 	        		duracion, tamaño);
 	        
+	        nuevoVideo.setPrecioFijo(precio);
 	        nuevoVideo.setAutor(nuevoAutor);
 	        boolean exhibicion = pedirConfirmacionAlUsuario("La pieza estara en exhibicion?");
 	        if (exhibicion) {
@@ -165,6 +174,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevoVideo);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevoVideo);
+	        nuevoAutor.agregarPieza(nuevoVideo);
 	        
         }
 		System.out.println("Pïeza agregada con exito!");

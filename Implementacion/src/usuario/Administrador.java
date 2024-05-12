@@ -68,7 +68,7 @@ public class Administrador extends Empleado {
     public void aumentarLimite(String id, int aumento){
          Comprador comprador = this.galeria.getControladorUsuarios().obtenerComprador(id);
          if (comprador != null && comprador.getLimiteCompras() + aumento >= 0)
-            comprador.setLimiteCompras(comprador.getLimiteCompras() + aumento);
+            comprador.setLimiteCompras(aumento);
     }
     public boolean verificarComprador(String id){
         if ( this.galeria.getControladorUsuarios().obtenerComprador(id) == null ) 

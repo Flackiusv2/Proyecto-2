@@ -84,10 +84,12 @@ public class ConsolaPrincipal extends ConsolaBasica{
 	private void cargarGaleria( )
     {
         String nombreArchivo = pedirCadenaAlUsuario( "Indique el archivo con la información de la gasolinera. El archivo debe estar dentro de la carpeta 'datos'" );
+        String nombreArchivosEmpleados = nombreArchivo + "empleados";
         if( !nombreArchivo.trim( ).equals( "" ) )
         {
             File archivo = new File( "./datos/" + nombreArchivo );
-
+            File archivoEmpleados = new File( "./datos/" + nombreArchivosEmpleados );
+            
             if( !archivo.exists( ) )
             {
                 System.out.println( "El archivo indicado no existe" );
@@ -97,6 +99,7 @@ public class ConsolaPrincipal extends ConsolaBasica{
                 try
                 {
                     laGaleria = Galeria.cargarEstado( archivo );
+                    Galeria.cargarEmpleados(archivoEmpleados, laGaleria);
                     System.out.println( "Se cargó la gasolinera a partir del archivo " + archivo.getAbsolutePath( ) );
                 }
                 catch( NumberFormatException e )
@@ -131,10 +134,12 @@ public class ConsolaPrincipal extends ConsolaBasica{
         else
         {
             String nombreArchivo = pedirCadenaAlUsuario( "Indique el nombre del archivo donde guardará la gasolinera en su estado actual. El archivo se guardará dentro de la carpeta 'datos'" );
+            String nombreArchivosEmpleados = nombreArchivo + "empleados";
             if( !nombreArchivo.trim( ).equals( "" ) )
             {
                 File archivo = new File( "./datos/" + nombreArchivo );
-
+                File archivoEmpleados = new File( "./datos/" + nombreArchivosEmpleados );
+                
                 boolean confirmar = true;
                 if( archivo.exists( ) )
                 {
@@ -145,6 +150,7 @@ public class ConsolaPrincipal extends ConsolaBasica{
                     try
                     {
                         laGaleria.guardarEstado( archivo );
+                        laGaleria.guardarEmpleados(archivoEmpleados);
                         System.out.println( "El estado actual de la galeria fue salvado en el archivo " + archivo.getAbsolutePath( ) );
                     }
                     catch( IOException e )

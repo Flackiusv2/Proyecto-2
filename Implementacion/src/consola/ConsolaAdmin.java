@@ -12,7 +12,7 @@ import usuario.Propietario;
 
 public class ConsolaAdmin extends ConsolaBasica{
 	
-	private final String[] opcionesAdmin= new String[]{"Registrar ingreso de pieza", "Verificar comprador", "Aumentar límite de credito", "Confirmar venta", "Devolución de pieza", "Verificar seriedad de oferta", "Bloquear pieza", "Desbloquear pieza","Ver historial de una pieza","Ver historia de un artista", "Regresar"};
+	private final String[] opcionesAdmin= new String[]{"Ver historia de un comprador", "Verificar comprador", "Aumentar límite de credito", "Confirmar venta", "Devolución de pieza", "Verificar seriedad de oferta", "Bloquear pieza", "Desbloquear pieza","Ver historial de una pieza","Ver historia de un artista", "Regresar"};
 	
 	private Galeria laGaleria;
 	private Administrador admin;
@@ -36,19 +36,33 @@ public class ConsolaAdmin extends ConsolaBasica{
             int opcionSeleccionada = mostrarMenu( "Menu de la Galeria", opcionesAdmin );
             if( opcionSeleccionada == 1 )
             {	
-            	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles para registrar son: \n");
-            		System.out.println("La pieza " + pz.getTitulo() + "con un valor de " + pz.getPrecioFijo());  
-            		
+            	System.out.println("Los compradores acutales son: \n");
+            	for (Comprador cp : mapaCompradores.values()) {
+            	    System.out.println(cp.getLogin());
             	}
-            	String piezaName  = pedirCadenaAlUsuario("Ingrese el nombre de la pieza a ingresar");
-            	Pieza piezaIngreso = laGaleria.getInventario().buscarPieza(piezaName);
-            	registrarIngresoPieza(admin, piezaIngreso);
+            	String compradorName  = pedirCadenaAlUsuario("Ingrese el nombre del comprador deseado");
+            	Comprador compa = mapaCompradores.get(compradorName);
+            	List<Compra> misCompras = compa.getmisCompras();
+            	if (misCompras.size() == 0) {
+            		System.out.println(compradorName + "no ha realizado ninguna compra!");
+            	}
+            	else {
+            	System.out.println(compradorName + " ha comprado las siguientes piezas: ");
+            	int valorColeccion = 0;
+            	for (Compra unaCompra: misCompras) {
+            		
+            		Pieza pz = unaCompra.getPieza();
+            		System.out.println("La pieza " + pz.getTitulo() + " en el " + pz.getFechaVenta());
+            		valorColeccion += pz.getPrecioFijo();
+            	}
+            	System.out.println("El valor total de la coleecion es de: " + valorColeccion);
+            	}
             }
             else if( opcionSeleccionada == 2 )
             {	
+            	System.out.println("Los compradores acutales son: \n");
             	for (Comprador cp : mapaCompradores.values()) {
-            	    System.out.println("Los compradores acutales son: \n");
+            	    
             	    System.out.println(cp.getLogin());
             	}
             	String compradorName  = pedirCadenaAlUsuario("Ingrese el nombre del comprador a registrar");
@@ -57,9 +71,10 @@ public class ConsolaAdmin extends ConsolaBasica{
                 verificarComprador(admin, id );
             }
             else if( opcionSeleccionada == 3 )
-            {
+            {	
+            	System.out.println("Los compradores acutales son: \n");
             	for (Comprador cp : mapaCompradores.values()) {
-            	    System.out.println("Los compradores acutales son: \n");
+            	    
             	    System.out.println(cp.getLogin() + ", su limite acutal es: " + cp.getLimiteCompras());
             	}
             	String compradorName  = pedirCadenaAlUsuario("Ingrese el nombre del comprador al que le va a subir el limite");
@@ -69,9 +84,10 @@ public class ConsolaAdmin extends ConsolaBasica{
                 aumentarLimite(admin, id, compa, newLimit );
             }
             else if( opcionSeleccionada == 4 )
-            {
+            {	
+            	System.out.println("Las piezas disponibles para confirmar venta son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles para confirmar venta son: \n");
+            		
             		System.out.println("La pieza " + pz.getTitulo() + "con un valor de " + pz.getPrecioFijo());  
             		
             	}
@@ -83,14 +99,16 @@ public class ConsolaAdmin extends ConsolaBasica{
             }
             else if( opcionSeleccionada == 5 )
             {
+            	System.out.println("Los propietarios acutales son: \n");
             	Map<String,Propietario> mapaPropietarios = laGaleria.getControladorUsuarios().getMapaPropietarios();
             	for (Propietario pp : mapaPropietarios.values()) {
-            	    System.out.println("Los propietarios acutales son: \n");
+            	    
             	    System.out.println(pp.getLogin());
             	}
             	String compradorName  = pedirCadenaAlUsuario("Ingrese el nombre del propietario al que se le va a regresar la pieza");
+            	System.out.println("Las piezas disponibles para hacer devolucion son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles para hacer devolucion son: \n");
+            		
             		System.out.println("La pieza " + pz.getTitulo() + "con un valor de " + pz.getPrecioFijo());  
             		
             	}
@@ -101,9 +119,10 @@ public class ConsolaAdmin extends ConsolaBasica{
             	devolucionPieza(prop, piezaReturn, id, admin );
             }
             else if( opcionSeleccionada == 6 )
-            {
+            {	
+            	System.out.println("Los compradores acutales son: \n");
             	for (Comprador cp : mapaCompradores.values()) {
-            	    System.out.println("Los compradores acutales son: \n");
+            	    
             	    System.out.println(cp.getLogin());
             	}
             	String compradorName  = pedirCadenaAlUsuario("Ingrese el nombre del comprador");
@@ -111,9 +130,10 @@ public class ConsolaAdmin extends ConsolaBasica{
             	verificarSeriedadOferta(admin, compa);
             }
             else if( opcionSeleccionada == 7 )
-            {
+            {	
+            	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
+            		
             		System.out.println("La pieza " + pz.getTitulo() + "y su estado de bloqueo es: " + pz.isBloqueada());  
             		
             	}
@@ -122,9 +142,10 @@ public class ConsolaAdmin extends ConsolaBasica{
             	bloquearPieza(admin, piezaName, piezaReturn);
             }
             else if( opcionSeleccionada == 8 )
-            {
+            {	
+            	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
+            		
             		System.out.println("La pieza " + pz.getTitulo() + "y su estado de bloqueo es: " + pz.isBloqueada());  
             		
             	}
@@ -133,10 +154,11 @@ public class ConsolaAdmin extends ConsolaBasica{
             	desbloquearPieza(admin, piezaName, piezaReturn);
             }
             else if( opcionSeleccionada == 9 )
-            {
+            {	
+            	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
-            		System.out.println("La pieza " + pz.getTitulo() + "con un valor de " + pz.getPrecioFijo());  
+            		
+            		System.out.println("La pieza " + pz.getTitulo() + " con un valor de " + pz.getPrecioFijo());  
             		
             	}
             	String piezaName  = pedirCadenaAlUsuario("Ingrese el nombre de la pieza de interes");
@@ -144,9 +166,10 @@ public class ConsolaAdmin extends ConsolaBasica{
             	pz.mostrarHistorial();
             }
             else if( opcionSeleccionada == 10 )
-            {
+            {	
+            	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
+            		
             		System.out.println("La pieza " + pz.getTitulo() + " y su autor es " + pz.getAutor().getNombre());  
             		
             	}

@@ -32,6 +32,7 @@ public class ConsolaCrearEmpleados extends ConsolaBasica {
 				Administrador nuevoAdmin = new Administrador(nombre, password, "AdminGeneral", laGaleria,  id );
                 
 				laGaleria.setAdministradorGaleria(nuevoAdmin);
+				laGaleria.getControladorUsuarios().agregarUsuario(nombre, password);
             }
             
             else if (opcionSeleccionada == 2) {

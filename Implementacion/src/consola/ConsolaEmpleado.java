@@ -66,7 +66,7 @@ public class ConsolaEmpleado extends ConsolaBasica {
             {
             	for (Pieza pz : piezasDisponibles) {
             		System.out.println("Las piezas disponibles son: \n");
-            		System.out.println("La pieza " + pz.getTitulo() + "con un valor de " + pz.getPrecioFijo());  
+            		System.out.println("La pieza " + pz.getTitulo() + " con un valor de " + pz.getPrecioFijo());  
             		
             	}
             	String piezaName  = pedirCadenaAlUsuario("Ingrese el nombre de la pieza de interes");

@@ -128,7 +128,7 @@ public abstract class Pieza {
     public int getPrecioFijo() {
         return precioFijo;
     }
-    public int setPrecioFijo() {
-        return precioFijo;
+    public void  setPrecioFijo(int precio) {
+        this.precioFijo = precio;
     }
 }
