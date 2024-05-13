@@ -105,11 +105,13 @@ public class AdminTest {
 		lista_a.add(pinturaAgregar);
 		assertEquals(lista_a, lista_b);
 	}
+	@Test
 	public void testVenta() {
 		String respuesta = admin.confirmarVenta(compra1,foto1,"547293");
 		assertEquals("Venta confirmada",respuesta);
 		
 	}
+	@Test
 	public void testdevolucion() {
 		List<Pieza> lista_a = admin.galeria.getInventario().getPiezasEnBodega();
 		lista_a.add(video1);
@@ -120,21 +122,24 @@ public class AdminTest {
 		assertEquals(lista_a, lista_b);
 		assertNotEquals(mis_a,mis_b);
 	}
+	@Test
 	public void testAugLim() {
 		int lim_1 = comprador.getLimiteCompras();
 		admin.aumentarLimite("547293", 200000);
 		int lim_2 = comprador.getLimiteCompras();
 		assertNotEquals(lim_1,lim_2);
 	}
+	@Test
 	public void testVerificar() {
 		assertEquals(admin.verificarComprador("547293"), true);
 		
 	}
+	@Test
 	public void testSeriedad() {
 		String respuesta = admin.verificarSeriedadOferta("547293", 20000);
 		assertNotEquals(respuesta, "El comprador no está registrado");
 	}
-	
+	@Test
 	public void testBloquear() {
 		
 		Pieza pieza = inventario1.buscarPieza("koliflor");
@@ -143,6 +148,7 @@ public class AdminTest {
 		boolean estado_2 = pieza.isBloqueada();
 		assertNotEquals(estado_1,estado_2);
 	}
+	@Test
 	public void testDesBloq() {
 		Pieza pieza = inventario1.buscarPieza("koliflor");
 		boolean estado_1 = pieza.isBloqueada();
