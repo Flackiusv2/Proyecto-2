@@ -66,8 +66,7 @@ public class consolaUsuario {
         propietario.agregarPieza(video1);
         propietario.agregarPieza(pintura1);
         propietario.pasarAPasadas(pintura1);
-        galeriaConsola.agregarCompra(compra1);
-        galeriaConsola.agregarCompra(compra2);
+        
         comprador.agregarCompra(compra1);
         comprador.agregarCompra(compra2);
         galeriaConsola.setAdministradorGaleria(admin);

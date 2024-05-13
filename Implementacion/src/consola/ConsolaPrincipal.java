@@ -27,6 +27,7 @@ public class ConsolaPrincipal extends ConsolaBasica{
         		System.out.println( "No hay en este momento una galeria que pueda usarse" );
         	}
         	else if (laGaleria.getControladorUsuarios().getMapaEmpleados().size() == 0) {
+        			
             		System.out.println("No puede haber una galeria sin empleados!");
         	}else {
         		usarGaleria( );
@@ -98,8 +99,8 @@ public class ConsolaPrincipal extends ConsolaBasica{
             {
                 try
                 {
-                    laGaleria = Galeria.cargarEstado( archivo );
-                    Galeria.cargarEmpleados(archivoEmpleados, laGaleria);
+                    Galeria GaleriaSinEmpleados = Galeria.cargarEstado( archivo );
+                    laGaleria = Galeria.cargarEmpleados(archivoEmpleados, GaleriaSinEmpleados);
                     System.out.println( "Se cargó la gasolinera a partir del archivo " + archivo.getAbsolutePath( ) );
                 }
                 catch( NumberFormatException e )

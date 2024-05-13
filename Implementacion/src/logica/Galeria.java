@@ -85,8 +85,11 @@ public class Galeria {
         this.subastas.put(subasta.getId(), subasta);
     }
 
-    public void agregarCompra(Compra compra){
+    public void agregarCompra(Compra compra, Comprador compa){
+    	compra.getPieza().agregarDueño(compa);
+    	compra.getPieza().seVendio("2024/05/21");
         this.compras.put(compra.getId(), compra);
+        
     }
 
     public Subasta encontrarSubasta(String id) {
@@ -119,11 +122,12 @@ public class Galeria {
                 int alto = es.getAlto();
                 int ancho = es.getAncho();
                 int profundidad = es.getProfundidad();
+                int peso = es.getPeso();
                 String materiales = es.getMaterialesConstruccion();
                 boolean electricidad = es.isNecesitaElectricidad();
                 
                 writer.println(pz.getTipoPieza() + ":" +  titulo + ":" +  anio + ":" + lugar + ":" + fecha + ":"+  disponible  
-            			+ ":"+  bloqueada +":"+  alto + ":" + ancho + ":" + profundidad + ":" + materiales + ":" + electricidad
+            			+ ":"+  bloqueada +":"+  alto + ":" + ancho + ":" + profundidad + ":" + peso + ":"+ materiales + ":" + electricidad
             			+ ":" + autor +":"+  anonimo + ":" + precio );  
                 
             }
@@ -195,16 +199,16 @@ public class Galeria {
         for (Empleado empl : controladorUsuarios.getMapaEmpleados().values()) {
         	if (empl.getRol().equals("Cajero")) {
         		
-        		writer.println("cajero:" + ":"+empl.getLogin() +":"+ empl.getPassword() +":"+ empl.getRol() +
+        		writer.println("cajero:" +empl.getLogin() +":"+ empl.getPassword() +":"+ empl.getRol() +
         				":" + empl.getId() );
         	}else {
         		
-        		writer.println("operador:" + ":"+empl.getLogin() +":"+ empl.getPassword() +":"+ empl.getRol() +
+        		writer.println("operador:" +empl.getLogin() +":"+ empl.getPassword() +":"+ empl.getRol() +
         				":" + empl.getId() );
         	}
         }
         //Guardamos al admin de la galeria
-        writer.println("admin:" + ":"+ administradorGaleria.getLogin() +":"+ administradorGaleria.getPassword() +":"+ administradorGaleria.getRol() + ":" + administradorGaleria.getId());
+        writer.println("admin:" + administradorGaleria.getLogin() +":"+ administradorGaleria.getPassword() +":"+ administradorGaleria.getRol() + ":" + administradorGaleria.getId());
         
         writer.close( );
     }
@@ -225,7 +229,7 @@ public class Galeria {
                 boolean disponible;
                 boolean bloqueada;
                 boolean anonimo;
-            	String titulo = partes[ 1 ];
+            	String titulo = partes[1];
                 String anio = partes[2];
                 String lugar = partes [3];
                 String fecha = partes [4];
@@ -268,7 +272,7 @@ public class Galeria {
                 nuevaEscultura.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevaEscultura);
                 cInventario.pasarAExhibicion(nuevaEscultura);
-                
+                cInventario.pasarAPasadas(nuevaEscultura);
             }
             else if( partes[ 0 ].equals( "Fotografia" ) )
             {
@@ -313,7 +317,7 @@ public class Galeria {
                 nuevaFoto.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevaFoto);
                 cInventario.pasarAExhibicion(nuevaFoto);
-                
+                cInventario.pasarAPasadas(nuevaFoto);
                 
             }
             else if( partes[ 0 ].equals( "Impresion" ) )
@@ -361,6 +365,7 @@ public class Galeria {
                 nuevaImpresion.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevaImpresion);
                 cInventario.pasarAExhibicion(nuevaImpresion);
+                cInventario.pasarAPasadas(nuevaImpresion);
                 
             }
             else if( partes[ 0 ].equals( "Pintura" ) )
@@ -381,17 +386,17 @@ public class Galeria {
                 String Sanonimo = partes[11];
                 int precio = Integer.parseInt(partes[12]);
                 
-                if (Sdisponible == "true") {
+                if (Sdisponible.equals("true")) {
                 	disponible = true;
                 }else {
                 		disponible = false;
                 }
-                if (Sbloqueada == "true") {
+                if (Sbloqueada.equals("true")) {
                 	bloqueada = true;
                 }else {
                 		bloqueada = false;
                 }
-                if (Sanonimo == "true") {
+                if (Sanonimo.equals("true")) {
                 	anonimo = true;
                 }else {
                 		anonimo = false;
@@ -407,6 +412,7 @@ public class Galeria {
                 nuevaPintura.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevaPintura);
                 cInventario.pasarAExhibicion(nuevaPintura);
+                cInventario.pasarAPasadas(nuevaPintura);
                 
             }
             else if( partes[ 0 ].equals( "Video" ) )
@@ -452,6 +458,7 @@ public class Galeria {
                 nuevoVideo.setAutor(nuevoAutor);
                 cInventario.ponerEnDisponibles(nuevoVideo);
                 cInventario.pasarAExhibicion(nuevoVideo);
+                cInventario.pasarAPasadas(nuevoVideo);
                 
             }
             else if( partes[ 0 ].equals("comprador" ) )

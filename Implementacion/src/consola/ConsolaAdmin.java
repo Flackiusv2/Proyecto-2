@@ -18,6 +18,7 @@ public class ConsolaAdmin extends ConsolaBasica{
 	private Administrador admin;
 	Map<String,Comprador> mapaCompradores;
 	List<Pieza> piezasDisponibles; 
+	List<Pieza> piezasPasadas; 
 	
 	public ConsolaAdmin ( Galeria galeria  )
     {
@@ -25,6 +26,7 @@ public class ConsolaAdmin extends ConsolaBasica{
         this.admin = laGaleria.getAdministrador();
         this.mapaCompradores = laGaleria.getControladorUsuarios().getMapaCompradores();
     	this.piezasDisponibles = laGaleria.getInventario().getPiezasDisponibleVenta();
+    	this.piezasPasadas = laGaleria.getInventario().getPiezasPasadas();
     }
 	
 	public void mostrarMenu( )
@@ -44,7 +46,7 @@ public class ConsolaAdmin extends ConsolaBasica{
             	Comprador compa = mapaCompradores.get(compradorName);
             	List<Compra> misCompras = compa.getmisCompras();
             	if (misCompras.size() == 0) {
-            		System.out.println(compradorName + "no ha realizado ninguna compra!");
+            		System.out.println(compradorName + " no ha realizado ninguna compra!");
             	}
             	else {
             	System.out.println(compradorName + " ha comprado las siguientes piezas: ");
@@ -52,7 +54,7 @@ public class ConsolaAdmin extends ConsolaBasica{
             	for (Compra unaCompra: misCompras) {
             		
             		Pieza pz = unaCompra.getPieza();
-            		System.out.println("La pieza " + pz.getTitulo() + " en el " + pz.getFechaVenta());
+            		System.out.println( pz.getTitulo() + " en el " + pz.getFechaVenta());
             		valorColeccion += pz.getPrecioFijo();
             	}
             	System.out.println("El valor total de la coleecion es de: " + valorColeccion);
@@ -134,7 +136,7 @@ public class ConsolaAdmin extends ConsolaBasica{
             	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
             		
-            		System.out.println("La pieza " + pz.getTitulo() + "y su estado de bloqueo es: " + pz.isBloqueada());  
+            		System.out.println("La pieza " + pz.getTitulo() + " y su estado de bloqueo es: " + pz.isBloqueada());  
             		
             	}
             	String piezaName  = pedirCadenaAlUsuario("Ingrese el nombre de la pieza a bloquear");
@@ -146,7 +148,7 @@ public class ConsolaAdmin extends ConsolaBasica{
             	System.out.println("Las piezas disponibles son: \n");
             	for (Pieza pz : piezasDisponibles) {
             		
-            		System.out.println("La pieza " + pz.getTitulo() + "y su estado de bloqueo es: " + pz.isBloqueada());  
+            		System.out.println("La pieza " + pz.getTitulo() + " y su estado de bloqueo es: " + pz.isBloqueada());  
             		
             	}
             	String piezaName  = pedirCadenaAlUsuario("Ingrese el nombre de la pieza a desbloquear");
@@ -156,7 +158,7 @@ public class ConsolaAdmin extends ConsolaBasica{
             else if( opcionSeleccionada == 9 )
             {	
             	System.out.println("Las piezas disponibles son: \n");
-            	for (Pieza pz : piezasDisponibles) {
+            	for (Pieza pz : piezasPasadas) {
             		
             		System.out.println("La pieza " + pz.getTitulo() + " con un valor de " + pz.getPrecioFijo());  
             		
@@ -168,7 +170,7 @@ public class ConsolaAdmin extends ConsolaBasica{
             else if( opcionSeleccionada == 10 )
             {	
             	System.out.println("Las piezas disponibles son: \n");
-            	for (Pieza pz : piezasDisponibles) {
+            	for (Pieza pz : piezasPasadas) {
             		
             		System.out.println("La pieza " + pz.getTitulo() + " y su autor es " + pz.getAutor().getNombre());  
             		

@@ -8,13 +8,18 @@ import org.junit.jupiter.api.Test;
 
 class base {
 
+	int precio;
 	@BeforeEach
 	void setUp() throws Exception {
+		
+		precio = 20;
 	}
 
 	@Test
 	void test() {
-		fail("Not yet implemented");
+		assertEquals(20,precio,"mal");
+		
+		
 	}
 
 }

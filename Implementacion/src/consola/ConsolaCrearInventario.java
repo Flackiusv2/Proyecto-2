@@ -95,6 +95,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevaEscultura);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevaEscultura);
+	        nuevoInventario.pasarAPasadas(nuevaEscultura);
 	        nuevoAutor.agregarPieza(nuevaEscultura);
 	        
         }
@@ -114,6 +115,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevaFoto);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevaFoto);
+	        nuevoInventario.pasarAPasadas(nuevaFoto);
 	        nuevoAutor.agregarPieza(nuevaFoto);
         }
         else if  ( opcionSeleccionada == 3 ) {
@@ -135,6 +137,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevaImpresion);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevaImpresion);
+	        nuevoInventario.pasarAPasadas(nuevaImpresion);
 	        nuevoAutor.agregarPieza(nuevaImpresion);
 	        
         }
@@ -155,6 +158,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevaPintura);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevaPintura);
+	        nuevoInventario.pasarAPasadas(nuevaPintura);
 	        nuevoAutor.agregarPieza(nuevaPintura);
 			
         }	
@@ -174,6 +178,7 @@ public class ConsolaCrearInventario extends ConsolaBasica{
 	        	nuevoInventario.guardarEnBodega(nuevoVideo);
 	        }
 	        nuevoInventario.ponerEnDisponibles(nuevoVideo);
+	        nuevoInventario.pasarAPasadas(nuevoVideo);
 	        nuevoAutor.agregarPieza(nuevoVideo);
 	        
         }

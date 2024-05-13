@@ -18,12 +18,13 @@ public class ConsolaEmpleado extends ConsolaBasica {
 	private Empleado mySelf;
 	private Galeria laGaleria;
 	List<Pieza> piezasDisponibles;
-	
+	List<Pieza> piezasPasadas; 
 	public ConsolaEmpleado ( Galeria galeria, String rol1, Empleado empleado )
     {
         this.laGaleria = galeria;
         this.rol = rol1;
         this.mySelf = empleado;
+        this.piezasPasadas = laGaleria.getInventario().getPiezasPasadas();
         this.piezasDisponibles = laGaleria.getInventario().getPiezasDisponibleVenta();
     }
 	
@@ -63,9 +64,10 @@ public class ConsolaEmpleado extends ConsolaBasica {
             	System.out.println("La pieza con título fue entregada exitosamente!");
             }
             else if( opcionSeleccionada == 3 )
-            {
-            	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
+            {	
+            	System.out.println("Las piezas disponibles son: \n");
+            	for (Pieza pz : piezasPasadas) {
+            		
             		System.out.println("La pieza " + pz.getTitulo() + " con un valor de " + pz.getPrecioFijo());  
             		
             	}
@@ -74,9 +76,10 @@ public class ConsolaEmpleado extends ConsolaBasica {
             	pz.mostrarHistorial();
             }
             else if( opcionSeleccionada == 4 )
-            {
-            	for (Pieza pz : piezasDisponibles) {
-            		System.out.println("Las piezas disponibles son: \n");
+            {	
+            	System.out.println("Las piezas disponibles son: \n");
+            	for (Pieza pz : piezasPasadas) {
+            		
             		System.out.println("La pieza " + pz.getTitulo() + " y su autor es " + pz.getAutor().getNombre());  
             		
             	}

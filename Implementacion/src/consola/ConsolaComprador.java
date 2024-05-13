@@ -18,12 +18,14 @@ public class ConsolaComprador extends ConsolaBasica {
 	private Galeria laGaleria;
 	Comprador myself;
 	List<Pieza> piezasDisponibles; 
+	List<Pieza> piezasPasadas; 
 	
 	public ConsolaComprador ( Galeria galeria, Comprador yo  )
     {
         this.laGaleria = galeria;
     	this.piezasDisponibles = laGaleria.getInventario().getPiezasDisponibleVenta();
     	this.myself = yo;
+    	this.piezasPasadas = laGaleria.getInventario().getPiezasPasadas();
     }
 	
 	public void mostrarMenu( )
@@ -59,7 +61,7 @@ public class ConsolaComprador extends ConsolaBasica {
             else if( opcionSeleccionada == 3 )
             {	
             	System.out.println("Las piezas disponibles son: \n");
-            	for (Pieza pz : piezasDisponibles) {
+            	for (Pieza pz : piezasPasadas) {
             		
             		System.out.println("La pieza " + pz.getTitulo() + " con un valor de " + pz.getPrecioFijo());  
             		
@@ -71,7 +73,7 @@ public class ConsolaComprador extends ConsolaBasica {
             else if( opcionSeleccionada == 4 )
             {	
             	System.out.println("Las piezas disponibles son: \n");
-            	for (Pieza pz : piezasDisponibles) {
+            	for (Pieza pz : piezasPasadas) {
             		
             		System.out.println("La pieza " + pz.getTitulo() + " y su autor es " + pz.getAutor().getNombre());  
             		
@@ -97,10 +99,15 @@ public class ConsolaComprador extends ConsolaBasica {
 		
 	    System.out.println("El resultado de la compra de la pieza "+ pz.getTitulo()+ " fue: "); 
 	    Compra nuevaCompra = yo.realizarCompraFija(pz); 
-	    laGaleria.agregarCompra(nuevaCompra);
-	    laGaleria.getInventario().realizarCompra(pz);
+	    if (nuevaCompra == null){
+	    	System.out.println("Compra no exitosa, probablemente no tengas suficiente dinero!");
+	    }else {
 	    
+	    laGaleria.agregarCompra(nuevaCompra,  yo);
+	    laGaleria.getInventario().realizarCompra(pz);
+	    System.out.println("Compra existosa!");
 	    }
+	}
 	
 	
 	

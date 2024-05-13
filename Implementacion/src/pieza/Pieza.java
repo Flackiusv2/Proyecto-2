@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import usuario.Cliente;
+import usuario.Comprador;
 
 public abstract class Pieza {
 	
@@ -35,8 +36,8 @@ public abstract class Pieza {
     }
     
     public void mostrarHistorial() {
-    	System.out.println("Titulo de la pieza: " + this.titulo);
-    	System.out.println("La pieza esta bloqueda: " + this.bloqueada);
+    	System.out.println(this.titulo+ " tiene un precio de " + this.precioFijo + " y fue creada en " + this.lugarCreacion + " en el año " + this.año);
+    	System.out.println("La pieza esta bloqueada: " + this.bloqueada);
     	if (dueños.size() > 0) {
     		System.out.println("Los dueños de la pieza han sido: ");
     		for (Cliente cl : dueños) {
@@ -54,7 +55,7 @@ public abstract class Pieza {
     	}
     }
     
-    public void agregarDueño(Cliente cl) {
+    public void agregarDueño(Comprador cl) {
     	dueños.add(cl);
     }
 
